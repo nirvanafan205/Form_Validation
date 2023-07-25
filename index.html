@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Form Validation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/cd01da16da.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <form id="myForm">
+            <h1>Login</h1>
+
+            <!-- User name input-->
+            <div class="inputBox">
+                <input type="text" placeholder="Username" required id="userInput">
+                <i class="fa-regular fa-user"></i>
+            </div>
+
+            <!-- Password input with password visibility toggle -->
+            <div class="inputBox">
+                <input type="password" placeholder="Password" id="passwordInput" required>
+                <i id="togglePassword" class="fa-solid fa-lock" onclick="togglePasswordVisibility()"></i>
+            </div>
+
+            <!-- User name input-->
+            <div class="inputBox">
+                <input type="text" placeholder="Student ID number" required id="numbers">
+                <i class="fa-solid fa-arrow-up-1-9"></i>
+            </div>
+
+            <!-- Element to display Username validation message -->
+            <p id="usernameValidation" class="validation-message"></p>
+
+            <!-- Element to display Password validation message -->
+            <p id="passwordValidation" class="validation-message"></p>
+
+            <!-- Element to display Student ID validation message -->
+            <p id="studentIDValidation" class="validation-message"></p>
+
+            <input type="submit" value="Submit" id="submitButton">
+        </form>
+    </div>
+    <script src="form.js"></script>
+</body>
+
+</html>
