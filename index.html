@@ -15,7 +15,7 @@
         <form id="myForm">
             <h1>Login</h1>
 
-            <!-- User name input-->
+            <!-- Username input-->
             <div class="inputBox">
                 <input type="text" placeholder="Username" required id="userInput">
                 <i class="fa-regular fa-user"></i>
@@ -27,19 +27,26 @@
                 <i id="togglePassword" class="fa-solid fa-lock" onclick="togglePasswordVisibility()"></i>
             </div>
 
-            <!-- User name input-->
+            <!-- Student ID input-->
             <div class="inputBox">
                 <input type="text" placeholder="Student ID number" required id="numbers">
                 <i class="fa-solid fa-arrow-up-1-9"></i>
             </div>
 
-            <!-- Element to display Username validation message -->
+            <!-- Words -->
+            <div class="inputBox">
+                <input type="text" placeholder="Words" required id="word">
+            </div>
+
+            <p id="wordCountLabel" class="word-count">Words left: 25</p>
+
+            <!-- Username validation message -->
             <p id="usernameValidation" class="validation-message"></p>
 
-            <!-- Element to display Password validation message -->
+            <!-- Password validation message -->
             <p id="passwordValidation" class="validation-message"></p>
 
-            <!-- Element to display Student ID validation message -->
+            <!-- Student ID validation message -->
             <p id="studentIDValidation" class="validation-message"></p>
 
             <input type="submit" value="Submit" id="submitButton">

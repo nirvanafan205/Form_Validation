@@ -101,3 +101,10 @@ html {
     margin-top: 5px;
     display: none;
   }
+
+  /* word count */
+  .word-count {
+    margin-top: 5px;
+    color: black;
+    font-size: 14px;
+  }

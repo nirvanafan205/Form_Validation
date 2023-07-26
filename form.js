@@ -32,9 +32,9 @@ document
   .getElementById("userInput")
   .addEventListener("input", function (event) {
     var input = event.target;
-    var regex = /^[a-z]*$/; // Regular expression to match only lowercase letters
+    var lettersRegex = /^[a-z]*$/; // Regular expression to match only lowercase letters
 
-    if (!regex.test(input.value)) {
+    if (!lettersRegex.test(input.value)) {
       showUsernameValidationMessage(true);
       document.getElementById("usernameValidation").textContent =
         "Username must contain only lowercase letters.";
@@ -49,22 +49,34 @@ document
   .getElementById("passwordInput")
   .addEventListener("input", function (event) {
     var input = event.target;
-    var lowercaseRegex = /^(?=.*[a-z])/;
-    var uppercaseRegex = /^(?=.*[A-Z])/;
-    var numberRegex = /^(?=.*\d)/;
+
+    var hasLowercase = false;
+    var hasUppercase = false;
+    var hasNumber = false;
+
+    for (var i = 0; i < input.value.length; i++) {
+      var char = input.value[i];
+      if (char >= "a" && char <= "z") {
+        hasLowercase = true;
+      } else if (char >= "A" && char <= "Z") {
+        hasUppercase = true;
+      } else if (char >= "0" && char <= "9") {
+        hasNumber = true;
+      }
+    }
 
     var message = "";
 
-    if (!lowercaseRegex.test(input.value)) {
+    if (!hasLowercase) {
       message += "At least one lowercase letter";
     }
-    if (!uppercaseRegex.test(input.value)) {
+    if (!hasUppercase) {
       if (message !== "") {
         message += ", ";
       }
       message += "at least one uppercase letter";
     }
-    if (!numberRegex.test(input.value)) {
+    if (!hasNumber) {
       if (message !== "") {
         message += ", ";
       }
@@ -96,27 +108,40 @@ document
 // Form submission handler
 document.getElementById("myForm").addEventListener("submit", function (event) {
   var passwordInput = document.getElementById("passwordInput");
-  var lowercaseRegex = /^(?=.*[a-z])/;
-  var uppercaseRegex = /^(?=.*[A-Z])/;
-  var numberRegex = /^(?=.*\d)/;
+  var hasLowercase = false;
+  var hasUppercase = false;
+  var hasNumber = false;
+
+  for (var i = 0; i < passwordInput.value.length; i++) {
+    var char = passwordInput.value[i];
+    if (char >= "a" && char <= "z") {
+      hasLowercase = true;
+    } else if (char >= "A" && char <= "Z") {
+      hasUppercase = true;
+    } else if (char >= "0" && char <= "9") {
+      hasNumber = true;
+    }
+  }
 
   var message = "Password must contain: ";
-  if (!lowercaseRegex.test(passwordInput.value)) {
+
+  if (!hasLowercase) {
     message += "at least one lowercase letter, ";
   }
 
-  if (!uppercaseRegex.test(passwordInput.value)) {
+  if (!hasUppercase) {
     message += "at least one uppercase letter, ";
   }
-  if (!numberRegex.test(passwordInput.value)) {
+
+  if (!hasNumber) {
     message += "at least one number, ";
   }
 
-  // Remove the trailing comma and space from the message
-  message = message.replace(/, $/, "");
-
   if (passwordInput.value.length < 8) {
-    message += ", and be at least 8 characters long.";
+    message += "and be at least 8 characters long.";
+  } else {
+    // Remove the trailing comma and space from the message
+    message = message.substring(0, message.length - 2);
   }
 
   if (message === "Password must contain:") {
@@ -150,9 +175,53 @@ document.getElementById("numbers").addEventListener("input", function (event) {
     showStudentIDValidationMessage(false);
   } else if (!regex.test(input.value)) {
     showStudentIDValidationMessage(true);
-    document.getElementById("studentIDValidation").textContent = "Student ID must be exactly 9 digits.";
+    document.getElementById("studentIDValidation").textContent =
+      "Student ID must be exactly 9 digits.";
   } else {
     showStudentIDValidationMessage(false);
     document.getElementById("studentIDValidation").textContent = "";
   }
+});
+
+// Function to count words and update word count label
+function countWords(inputElement) {
+  var words = inputElement.value.trim().split(" ");
+  var wordCountLabel = document.getElementById("wordCountLabel");
+
+  // Remove empty words from the array
+  words = words.filter(function (word) {
+    return word !== "";
+  });
+
+  var remainingWords = 25 - words.length;
+  // Set minimum remaining words to zero
+  remainingWords = Math.max(remainingWords, 0);
+  wordCountLabel.textContent = "Words left: " + remainingWords;
+
+  // Disable the input only when remaining words are zero and the user presses the space bar
+  inputElement.disabled = remainingWords === 0 && event.data === " ";
+}
+
+// Call the countWords() function when the page loads to display the initial word count
+window.addEventListener("load", function () {
+  var wordInput = document.getElementById("word");
+  var userInput = document.getElementById("userInput");
+  var studentIDInput = document.getElementById("numbers");
+
+  // Reset the word count when the page loads
+  wordInput.value = "";
+  countWords(wordInput);
+
+  // Reset the username input
+  userInput.value = "";
+  showUsernameValidationMessage(false);
+
+  // Reset the student ID input
+  studentIDInput.value = "";
+  showStudentIDValidationMessage(false);
+
+  // Add the event listener for word count using "input" event
+  wordInput.addEventListener("input", function (event) {
+    countWords(wordInput, event);
+  });
 });
