@@ -1,32 +1,4 @@
-// Password section
-function togglePasswordVisibility() {
-  var passwordInput = document.getElementById("passwordInput");
-  var togglePassword = document.getElementById("togglePassword");
-
-  if (passwordInput.type === "password") {
-    passwordInput.type = "text";
-    togglePassword.classList.remove("fa-lock");
-    togglePassword.classList.add("fa-unlock");
-  } else {
-    passwordInput.type = "password";
-    togglePassword.classList.remove("fa-unlock");
-    togglePassword.classList.add("fa-lock");
-  }
-}
-
-// Function to show/hide the Username validation message
-function showUsernameValidationMessage(show) {
-  var validationMessage = document.getElementById("usernameValidation");
-  validationMessage.style.display = show ? "block" : "none";
-}
-
-// Function to show/hide the Password validation message
-function showPasswordValidationMessage(show, message) {
-  var validationMessage = document.getElementById("passwordValidation");
-  validationMessage.style.display = show ? "block" : "none";
-  validationMessage.textContent = message;
-}
-
+/* Username section stuff */
 // Username validation: Allow only lowercase letters
 document.getElementById("userInput").addEventListener("input", function (event) {
   var input = event.target;
@@ -50,6 +22,13 @@ document.getElementById("userInput").addEventListener("input", function (event) 
   }
 });
 
+// Function to show/hide the Username validation message
+function showUsernameValidationMessage(show) {
+  var validationMessage = document.getElementById("usernameValidation");
+  validationMessage.style.display = show ? "block" : "none";
+}
+
+/* Password section stuff */
 // Password validation: Must contain a mix of uppercase letters, lowercase letters, and numbers
 document
   .getElementById("passwordInput")
@@ -111,6 +90,29 @@ document
     }
   });
 
+// Function to show/hide the Password validation message
+function togglePasswordVisibility() {
+  var passwordInput = document.getElementById("passwordInput");
+  var togglePassword = document.getElementById("togglePassword");
+
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    togglePassword.classList.remove("fa-lock");
+    togglePassword.classList.add("fa-unlock");
+  } else {
+    passwordInput.type = "password";
+    togglePassword.classList.remove("fa-unlock");
+    togglePassword.classList.add("fa-lock");
+  }
+}
+
+// Function to show/hide the Password validation message
+function showPasswordValidationMessage(show, message) {
+  var validationMessage = document.getElementById("passwordValidation");
+  validationMessage.style.display = show ? "block" : "none";
+  validationMessage.textContent = message;
+}
+
 // Form submission handler
 document.getElementById("myForm").addEventListener("submit", function (event) {
   var passwordInput = document.getElementById("passwordInput");
@@ -165,11 +167,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent form submission for demonstration purposes
 });
 
-// Function to show/hide the Student ID validation message
-function showStudentIDValidationMessage(show) {
-  var validationMessage = document.getElementById("studentIDValidation");
-  validationMessage.style.display = show ? "block" : "none";
-}
+/* Student ID stuff */ 
 
 // Student ID validation: Must contain exactly 9 digits
 document.getElementById("numbers").addEventListener("input", function (event) {
@@ -201,6 +199,13 @@ document.getElementById("numbers").addEventListener("input", function (event) {
   }
 });
 
+// Function to show/hide the Student ID validation message
+function showStudentIDValidationMessage(show) {
+  var validationMessage = document.getElementById("studentIDValidation");
+  validationMessage.style.display = show ? "block" : "none";
+}
+
+/* Word Count input section */
 // Function to count words and update word count label
 function countWords(inputElement) {
   var words = inputElement.value.trim().split(" ");
