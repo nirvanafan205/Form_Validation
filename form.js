@@ -28,21 +28,27 @@ function showPasswordValidationMessage(show, message) {
 }
 
 // Username validation: Allow only lowercase letters
-document
-  .getElementById("userInput")
-  .addEventListener("input", function (event) {
-    var input = event.target;
-    var lettersRegex = /^[a-z]*$/; // Regular expression to match only lowercase letters
+document.getElementById("userInput").addEventListener("input", function (event) {
+  var input = event.target;
+  var usernameValidationMessage = document.getElementById("usernameValidation");
+  var isValid = true;
 
-    if (!lettersRegex.test(input.value)) {
-      showUsernameValidationMessage(true);
-      document.getElementById("usernameValidation").textContent =
-        "Username must contain only lowercase letters.";
-    } else {
-      showUsernameValidationMessage(false);
-      document.getElementById("usernameValidation").textContent = "";
+  for (var i = 0; i < input.value.length; i++) {
+    var char = input.value[i];
+    if (char < "a" || char > "z") {
+      isValid = false;
+      break;
     }
-  });
+  }
+
+  if (!isValid) {
+    showUsernameValidationMessage(true);
+    usernameValidationMessage.textContent = "Username must contain only lowercase letters.";
+  } else {
+    showUsernameValidationMessage(false);
+    usernameValidationMessage.textContent = "";
+  }
+});
 
 // Password validation: Must contain a mix of uppercase letters, lowercase letters, and numbers
 document
@@ -168,18 +174,30 @@ function showStudentIDValidationMessage(show) {
 // Student ID validation: Must contain exactly 9 digits
 document.getElementById("numbers").addEventListener("input", function (event) {
   var input = event.target;
-  var regex = /^\d{9}$/; // Regular expression to match exactly 9 digits
+  var studentIDValidationMessage = document.getElementById("studentIDValidation");
+  var inputValue = input.value.trim();
+  var isValid = true;
 
-  if (input.value.trim() === "") {
-    // If the input is empty, hide the validation message
-    showStudentIDValidationMessage(false);
-  } else if (!regex.test(input.value)) {
+  // Check if the input is empty or has a length other than 9
+  if (inputValue === "" || inputValue.length !== 9) {
+    isValid = false;
+  } else {
+    // Check if each character of the input is a digit (0-9)
+    for (var i = 0; i < inputValue.length; i++) {
+      var char = inputValue[i];
+      if (char < "0" || char > "9") {
+        isValid = false;
+        break;
+      }
+    }
+  }
+
+  if (!isValid) {
     showStudentIDValidationMessage(true);
-    document.getElementById("studentIDValidation").textContent =
-      "Student ID must be exactly 9 digits.";
+    studentIDValidationMessage.textContent = "Student ID must be exactly 9 digits.";
   } else {
     showStudentIDValidationMessage(false);
-    document.getElementById("studentIDValidation").textContent = "";
+    studentIDValidationMessage.textContent = "";
   }
 });
 
