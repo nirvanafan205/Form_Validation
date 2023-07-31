@@ -1,18 +1,38 @@
 /* Username section stuff */
 // Username validation: Allow only lowercase letters
-document.getElementById("userInput").addEventListener("input", function (event) {
-  var input = event.target;
+document.getElementById("userInput").addEventListener("input", function (event) { /* adds an event listener to the "userInput" element, listens for the "input" event.  */
+  var input = event.target; //  represents the element that triggered the event, assign it to the variable input for reference.
+
+  // retrieves the element with the ID "usernameValidation" and assigns it to the variable usernameMessage.
+  // This element is the container for the validation message for the username.
   var usernameValidationMessage = document.getElementById("usernameValidation");
+
+  // will be used to track whether the username is valid or not.
   var isValid = true;
 
+  // loop iterates through each character of the value of the entered username
   for (var i = 0; i < input.value.length; i++) {
+
+    // In each iteration of the loop, the variable char is assigned the current character of the username string.
     var char = input.value[i];
+
+    /*
+      if statement checks if the current character char is not a lowercase letter by comparing its character code.
+      If the character is not within the lowercase letter range, the isValid variable is set to false.
+    */
     if (char < "a" || char > "z") {
       isValid = false;
       break;
     }
   }
 
+
+  /*
+    After the loop finishes, this if-else block checks the value of isValid.
+    If it is false, it means that at least one character in the username is not a lowercase letter,
+    validation message for the username is displayed with the error message
+    if isValid is still true, it means the username contains only lowercase letters, and the validation message is cleared
+  */
   if (!isValid) {
     showUsernameValidationMessage(true);
     usernameValidationMessage.textContent = "Username must contain only lowercase letters.";
@@ -22,73 +42,84 @@ document.getElementById("userInput").addEventListener("input", function (event) 
   }
 });
 
+/*
+  function that toggles the display of the username validation message based on the show argument.
+  If show is true, the message is displayed (display: block)
+  if show is false, the message is hidden (display: none)
+  This function is used to control the visibility of the validation message.
+*/
 // Function to show/hide the Username validation message
 function showUsernameValidationMessage(show) {
   var validationMessage = document.getElementById("usernameValidation");
   validationMessage.style.display = show ? "block" : "none";
 }
 
+/*
+   enforce the rule that the username can only contain lowercase letters.
+   listens for changes in the "userInput" element and checks each character of the entered username.
+   If any character is not a lowercase letter, the validation message is displayed, indicating the error.
+   if all characters are lowercase letters, the validation message is cleared.
+*/
+
 /* Password section stuff */
 // Password validation: Must contain a mix of uppercase letters, lowercase letters, and numbers
-document
-  .getElementById("passwordInput")
-  .addEventListener("input", function (event) {
-    var input = event.target;
+document.getElementById("passwordInput").addEventListener("input", function (event) {
+  var input = event.target;
 
-    var hasLowercase = false;
-    var hasUppercase = false;
-    var hasNumber = false;
+  var hasLowercase = false;
+  var hasUppercase = false;
+  var hasNumber = false;
 
-    for (var i = 0; i < input.value.length; i++) {
-      var char = input.value[i];
-      if (char >= "a" && char <= "z") {
-        hasLowercase = true;
-      } else if (char >= "A" && char <= "Z") {
-        hasUppercase = true;
-      } else if (char >= "0" && char <= "9") {
-        hasNumber = true;
-      }
+  for (var i = 0; i < input.value.length; i++) {
+    var char = input.value[i];
+    if (char >= "a" && char <= "z") {
+      hasLowercase = true;
+    } else if (char >= "A" && char <= "Z") {
+      hasUppercase = true;
+    } else if (char >= "0" && char <= "9") {
+      hasNumber = true;
     }
+  }
 
-    var message = "";
+  var message = "";
 
-    if (!hasLowercase) {
-      message += "At least one lowercase letter";
+  if (!hasLowercase) {
+    message += "At least one lowercase letter";
+  }
+  if (!hasUppercase) {
+    if (message !== "") {
+      message += ", ";
     }
-    if (!hasUppercase) {
-      if (message !== "") {
-        message += ", ";
-      }
-      message += "at least one uppercase letter";
+    message += "at least one uppercase letter";
+  }
+  if (!hasNumber) {
+    if (message !== "") {
+      message += ", ";
     }
-    if (!hasNumber) {
-      if (message !== "") {
-        message += ", ";
-      }
-      message += "at least one number";
-    }
+    message += "at least one number";
+  }
 
-    if (input.value.length < 8) {
-      if (message !== "") {
-        message += ", ";
-      }
-      message += "be at least 8 characters long";
+  if (input.value.length < 8) {
+    if (message !== "") {
+      message += ", ";
     }
+    message += "be at least 8 characters long";
+  }
 
-    if (input.value.trim() === "") {
-      // If the password input is empty, hide the validation message
-      showPasswordValidationMessage(false);
-    } else if (message === "") {
-      // If the password is valid, hide the validation message
-      showPasswordValidationMessage(false);
-    } else {
-      // If the password is invalid, show the validation message with specific feedback
-      showPasswordValidationMessage(
-        true,
-        "Password must contain: " + message + "."
-      );
-    }
-  });
+  if (input.value.trim() === "") {
+    // If the password input is empty, hide the validation message
+    showPasswordValidationMessage(false);
+  } else if (message === "") {
+    // If the password is valid, hide the validation message
+    showPasswordValidationMessage(false);
+  } else {
+    // If the password is invalid, show the validation message with specific feedback
+    showPasswordValidationMessage(
+      true,
+      "Password must contain: " + message + "."
+    );
+  }
+});
 
 // Function to show/hide the Password validation message
 function togglePasswordVisibility() {
@@ -167,7 +198,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent form submission for demonstration purposes
 });
 
-/* Student ID stuff */ 
+/* Student ID stuff */
 
 // Student ID validation: Must contain exactly 9 digits
 document.getElementById("numbers").addEventListener("input", function (event) {
