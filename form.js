@@ -26,7 +26,6 @@ document.getElementById("userInput").addEventListener("input", function (event) 
     }
   }
 
-
   /*
     After the loop finishes, this if-else block checks the value of isValid.
     If it is false, it means that at least one character in the username is not a lowercase letter,
@@ -63,13 +62,17 @@ function showUsernameValidationMessage(show) {
 
 /* Password section stuff */
 // Password validation: Must contain a mix of uppercase letters, lowercase letters, and numbers
-document.getElementById("passwordInput").addEventListener("input", function (event) {
-  var input = event.target;
+document.getElementById("passwordInput").addEventListener("input", function (event) { /* adds an event listener to the "passwordInput" element, which listens for the "input" event. */
+  var input = event.target; // represents the element that triggered the event, assign it to the variable input for reference.
 
+  // Three boolean variables are initialized to false.
+  // variables will be used to track whether the password contains at least
+  // one lowercase letter, one uppercase letter, and one number
   var hasLowercase = false;
   var hasUppercase = false;
   var hasNumber = false;
 
+  //  loop is used to iterate through each character of the password
   for (var i = 0; i < input.value.length; i++) {
     var char = input.value[i];
     if (char >= "a" && char <= "z") {
@@ -79,10 +82,19 @@ document.getElementById("passwordInput").addEventListener("input", function (eve
     } else if (char >= "0" && char <= "9") {
       hasNumber = true;
     }
+
+    /*
+      each character is checked to determine whether it belongs to lowercase letters, uppercase letters, or numbers using their respective ASCII character codes.
+      If a character matches any of these categories, the corresponding boolean variable is set to true.
+    */
   }
 
+  //  initialized to an empty string. 
+  // will be used to store the specific requirements that the password must meet
   var message = "";
 
+  // A series of if statements are used to construct the message string based on the password validation rules.
+  // If a requirement is not met, a message for that requirement is added to the message string.
   if (!hasLowercase) {
     message += "At least one lowercase letter";
   }
@@ -119,6 +131,14 @@ document.getElementById("passwordInput").addEventListener("input", function (eve
       "Password must contain: " + message + "."
     );
   }
+
+  /*
+    After checking all the characters in the password, the length of the message string is examined.
+    If it is empty, it means all password requirements are met, and the password is valid.
+    If the password input is empty (all spaces) and contains no characters, the validation message is hidden.
+    Otherwise, if the password is valid (all requirements are met), the validation message is hidden.
+    If the password is invalid , the validation message is shown with the specific feedback provided in the message variable.
+  */
 });
 
 // Function to show/hide the Password validation message
@@ -135,22 +155,40 @@ function togglePasswordVisibility() {
     togglePassword.classList.remove("fa-unlock");
     togglePassword.classList.add("fa-lock");
   }
+
+  /*
+    function handles the visibility of the password.
+    When the password input is of type password, it shows the password as plain text.
+    if the input is of type "text," it hides the password.
+  */
 }
 
 // Function to show/hide the Password validation message
 function showPasswordValidationMessage(show, message) {
   var validationMessage = document.getElementById("passwordValidation");
-  validationMessage.style.display = show ? "block" : "none";
+  validationMessage.style.display = show ? "block" : "none"; // ternary operator
   validationMessage.textContent = message;
+  /*
+    responsible for showing/hiding the validation message.
+    takes two arguments: show, a boolean that determines whether to show or hide the message, and message, which contains the specific validation feedback.
+    If show is true, the message is displayed (display: block), and if show is false, the message is hidden (display: none).
+    The textContent property is used to set the message content.
+  */
 }
 
 // Form submission handler
-document.getElementById("myForm").addEventListener("submit", function (event) {
+document.getElementById("myForm").addEventListener("submit", function (event) { /* adds an event listener to the "submit" event of the form element with the id "myForm." */
+
+  // fetches the password input element with the id "passwordInput" and assigns it to the variable passwordInput
   var passwordInput = document.getElementById("passwordInput");
+
+  // Three boolean variables are initialized to false. will be used to track whether the password contains at least one
+  // lowercase letter, one uppercase letter, and one number, respectively
   var hasLowercase = false;
   var hasUppercase = false;
   var hasNumber = false;
 
+  // loop is used to iterate through each character of the password
   for (var i = 0; i < passwordInput.value.length; i++) {
     var char = passwordInput.value[i];
     if (char >= "a" && char <= "z") {
@@ -192,22 +230,52 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission if validation fails
   }
 
-  // Your custom form validation logic goes here
-  // For demonstration purposes, let's just display an alert message:
+  // display an alert message:
   alert("Form validation succeeded!");
-  event.preventDefault(); // Prevent form submission for demonstration purposes
+
+  // prevents the form from being submitted to the server, effectively preventing form submission if the validation fails.
+  event.preventDefault();
 });
 
 /* Student ID stuff */
-
 // Student ID validation: Must contain exactly 9 digits
+/*
+  adds an event listener to the "input" event of the element with the ID "numbers."
+  function provided as the second argument will be executed whenever the user types or modifies the input in the student ID field
+*/
 document.getElementById("numbers").addEventListener("input", function (event) {
+  /*
+    event object contains information about the event that occurred.
+    The event.target property represents the element that triggered the event, which is the student ID input field itself.
+
+    studentIDValidationMessage is used to retrieve the element with the ID "studentIDValidation" and assign it to a variable.
+    This element is the container for the validation message for the student ID.
+
+    inputValue is a variable that stores the trimmed value of the student ID input.
+    The .trim() method is used to remove any leading or trailing whitespaces from the input.
+
+    isValid is a boolean variable initialized to true.
+    It will be used to track whether the student ID is valid or not.
+  */
   var input = event.target;
   var studentIDValidationMessage = document.getElementById("studentIDValidation");
   var inputValue = input.value.trim();
   var isValid = true;
 
   // Check if the input is empty or has a length other than 9
+
+  /*
+    checks the validity of the student ID input.
+    checks whether the inputValue is empty or its length is not equal to 9.
+    If either condition is true, it sets isValid to false, indicating that the student ID is invalid.
+
+    If the inputValue passes the above check, it enters the else block.
+    In the else block, it iterates through each character of the inputValue using a for loop.
+
+    For each character char in inputValue, it checks whether it is a digit.
+    If any character is not a digit, it sets isValid to false and immediately breaks out of the loop using the break statement.
+  */
+
   if (inputValue === "" || inputValue.length !== 9) {
     isValid = false;
   } else {
@@ -221,6 +289,7 @@ document.getElementById("numbers").addEventListener("input", function (event) {
     }
   }
 
+  //  this block shows or hides the validation message for the student ID.
   if (!isValid) {
     showStudentIDValidationMessage(true);
     studentIDValidationMessage.textContent = "Student ID must be exactly 9 digits.";
@@ -234,11 +303,27 @@ document.getElementById("numbers").addEventListener("input", function (event) {
 function showStudentIDValidationMessage(show) {
   var validationMessage = document.getElementById("studentIDValidation");
   validationMessage.style.display = show ? "block" : "none";
+
+
+  /*
+    responsible for showing or hiding the validation message for the student ID.
+    It takes one argument show, which is a boolean value that determines whether to show (true) or hide (false) the message.
+
+    The function retrieves the element with the ID "studentIDValidation" and assigns it to the variable validationMessage.
+    This element is the container for the validation message for the student ID.
+
+    Depending on the value of show, it sets the display style of the validationMessage element to either "block" (to show the message) or "none" (to hide the message).
+    This effectively controls the visibility of the validation message.
+  */
 }
 
 /* Word Count input section */
 // Function to count words and update word count label
-function countWords(inputElement) {
+function countWords(inputElement) { /* The inputElement is expected to be an input field from which the word count needs to be calculated. */
+  /*
+    retrieves the value of the input field and then .trim() method is used to remove any leading or trailing whitespaces from the value.
+    .split(" ") is used to split the trimmed value into an array of words based on spaces (" ").
+  */
   var words = inputElement.value.trim().split(" ");
   var wordCountLabel = document.getElementById("wordCountLabel");
 
@@ -247,10 +332,12 @@ function countWords(inputElement) {
     return word !== "";
   });
 
-  var remainingWords = 25 - words.length;
+  // calculates the remaining words the user can input. The maximum word count allowed is 25
+  var remainingWords = 25 - words.length; // initialized with the difference between the maximum word count and the number of words in the words array.
+
   // Set minimum remaining words to zero
-  remainingWords = Math.max(remainingWords, 0);
-  wordCountLabel.textContent = "Words left: " + remainingWords;
+  remainingWords = Math.max(remainingWords, 0); //  ensure that remainingWords is at least zero. If it is negative, it is set to zero.
+  wordCountLabel.textContent = "Words left: " + remainingWords;  //  display the remaining word count.
 
   // Disable the input only when remaining words are zero and the user presses the space bar
   inputElement.disabled = remainingWords === 0 && event.data === " ";
