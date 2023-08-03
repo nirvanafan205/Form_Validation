@@ -62,7 +62,7 @@ function showUsernameValidationMessage(show) {
 
 /* Starting ponit stuff */
 // Start Year validation: Must be a valid year (2-digit or 4-digit, not in the future)
-document.getElementById("startYear").addEventListener("input", function (event) {
+document.getElementById("startYear").addEventListener("blur", function (event) {
   var input = event.target;
   var startYearValidationMessage = document.getElementById("startYearValidation");
   var startYear = input.value.trim();
@@ -92,6 +92,12 @@ document.getElementById("startYear").addEventListener("input", function (event) 
   startYearValidationMessage.style.display = isValid ? "none" : "block";
   startYearValidationMessage.textContent = isValid ? "" : "Invalid year format or year is in the future.";
 });
+
+
+
+
+
+
 
 // Start Semester validation: Must be a valid semester option
 document.getElementById("startSemester").addEventListener("change", function (event) {
@@ -398,6 +404,8 @@ window.addEventListener("load", function () {
   var wordInput = document.getElementById("word");
   var userInput = document.getElementById("userInput");
   var studentIDInput = document.getElementById("numbers");
+  var startYearInput = document.getElementById("startYear");
+  var startSemester = document.getElementById("startSemester");
 
   // Reset the word count when the page loads
   wordInput.value = "";
@@ -410,6 +418,14 @@ window.addEventListener("load", function () {
   // Reset the student ID input
   studentIDInput.value = "";
   showStudentIDValidationMessage(false);
+
+  // Reset the semester input
+  startSemester.value ="";
+  startSemesterValidationMessage(false);
+
+  // Reset the start year input
+  startYearInput.value ="";
+  startYearValidationMessage(false);
 
   // Add the event listener for word count using "input" event
   wordInput.addEventListener("input", function (event) {
