@@ -41,7 +41,7 @@
 
             <!-- Year input -->
             <div class="inputBox">
-                <input type="text" placeholder="Start Year" id="startYear" required>
+                <input type="text" placeholder="Start Year" id="startYear" required autocomplete="off">
                 <i class="fa-solid fa-calendar"></i>
             </div>
 
@@ -66,6 +66,14 @@
 
             <!-- Student ID validation message -->
             <p id="studentIDValidation" class="validation-message"></p>
+
+
+            <!-- Add a div for displaying the success message -->
+            <div id="successMessage" class="message"></div>
+
+            <!-- Add a div for displaying the error messages -->
+            <div id="errorMessage" class="message"></div>
+
 
             <input type="submit" value="Submit" id="submitButton">
         </form>

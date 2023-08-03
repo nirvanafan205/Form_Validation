@@ -13,7 +13,7 @@ html {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url(space.jpg) no-repeat;
+    background-color: purple;
     background-size: cover;
     background-position: center;
   }
@@ -108,3 +108,24 @@ html {
     color: black;
     font-size: 14px;
   }
+
+  /* CSS for the message divs */
+.message {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+/* CSS for the success message */
+#successMessage {
+  color: green;
+}
+
+/* CSS for the error message */
+#errorMessage {
+  color: red;
+  background-color: #ffe6e6;
+  border: 2px solid red;
+}
