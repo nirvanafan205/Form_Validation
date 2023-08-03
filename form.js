@@ -1,45 +1,49 @@
 /* Username section stuff */
 // Username validation: Allow only lowercase letters
-document.getElementById("userInput").addEventListener("input", function (event) { /* adds an event listener to the "userInput" element, listens for the "input" event.  */
-  var input = event.target; //  represents the element that triggered the event, assign it to the variable input for reference.
+document
+  .getElementById("userInput")
+  .addEventListener("input", function (event) {
+    /* adds an event listener to the "userInput" element, listens for the "input" event.  */ var input =
+      event.target; //  represents the element that triggered the event, assign it to the variable input for reference.
 
-  // retrieves the element with the ID "usernameValidation" and assigns it to the variable usernameMessage.
-  // This element is the container for the validation message for the username.
-  var usernameValidationMessage = document.getElementById("usernameValidation");
+    // retrieves the element with the ID "usernameValidation" and assigns it to the variable usernameMessage.
+    // This element is the container for the validation message for the username.
+    var usernameValidationMessage =
+      document.getElementById("usernameValidation");
 
-  // will be used to track whether the username is valid or not.
-  var isValid = true;
+    // will be used to track whether the username is valid or not.
+    var isValid = true;
 
-  // loop iterates through each character of the value of the entered username
-  for (var i = 0; i < input.value.length; i++) {
+    // loop iterates through each character of the value of the entered username
+    for (var i = 0; i < input.value.length; i++) {
+      // In each iteration of the loop, the variable char is assigned the current character of the username string.
+      var char = input.value[i];
 
-    // In each iteration of the loop, the variable char is assigned the current character of the username string.
-    var char = input.value[i];
-
-    /*
+      /*
       if statement checks if the current character char is not a lowercase letter by comparing its character code.
       If the character is not within the lowercase letter range, the isValid variable is set to false.
     */
-    if (char < "a" || char > "z") {
-      isValid = false;
-      break;
+      if (char < "a" || char > "z") {
+        isValid = false;
+        break;
+      }
     }
-  }
 
-  /*
+    /*
     After the loop finishes, this if-else block checks the value of isValid.
     If it is false, it means that at least one character in the username is not a lowercase letter,
     validation message for the username is displayed with the error message
     if isValid is still true, it means the username contains only lowercase letters, and the validation message is cleared
   */
-  if (!isValid) {
-    showUsernameValidationMessage(true);
-    usernameValidationMessage.textContent = "Username must contain only lowercase letters.";
-  } else {
-    showUsernameValidationMessage(false);
-    usernameValidationMessage.textContent = "";
-  }
-});
+    if (!isValid) {
+      showUsernameValidationMessage(true);
+      usernameValidationMessage.textContent =
+        "Username must contain only lowercase letters.";
+    } else {
+      showUsernameValidationMessage(false);
+      usernameValidationMessage.textContent = "";
+    }
+  });
 
 /*
   function that toggles the display of the username validation message based on the show argument.
@@ -64,7 +68,9 @@ function showUsernameValidationMessage(show) {
 // Start Year validation: Must be a valid year (2-digit or 4-digit, not in the future)
 document.getElementById("startYear").addEventListener("blur", function (event) {
   var input = event.target;
-  var startYearValidationMessage = document.getElementById("startYearValidation");
+  var startYearValidationMessage = document.getElementById(
+    "startYearValidation"
+  );
   var startYear = input.value.trim();
 
   // Check if the year is in 2-digit or 4-digit format
@@ -82,7 +88,10 @@ document.getElementById("startYear").addEventListener("blur", function (event) {
 
   // Check if the year is not in the future
   var currentYear = new Date().getFullYear();
-  var year = startYear.length === 2 ? parseInt("20" + startYear, 10) : parseInt(startYear, 10);
+  var year =
+    startYear.length === 2
+      ? parseInt("20" + startYear, 10)
+      : parseInt(startYear, 10);
   var isNotInFuture = year <= currentYear;
 
   // Combine the format, valid year, and not in the future checks
@@ -90,112 +99,119 @@ document.getElementById("startYear").addEventListener("blur", function (event) {
 
   // Display validation message
   startYearValidationMessage.style.display = isValid ? "none" : "block";
-  startYearValidationMessage.textContent = isValid ? "" : "Invalid year format or year is in the future.";
+  startYearValidationMessage.textContent = isValid
+    ? ""
+    : "Invalid year format or year is in the future.";
 });
-
-
-
-
-
-
 
 // Start Semester validation: Must be a valid semester option
-document.getElementById("startSemester").addEventListener("change", function (event) {
-  var input = event.target;
-  var startSemesterValidationMessage = document.getElementById("startSemesterValidation");
-  var selectedSemester = input.value;
+document
+  .getElementById("startSemester")
+  .addEventListener("change", function (event) {
+    var input = event.target;
+    var startSemesterValidationMessage = document.getElementById(
+      "startSemesterValidation"
+    );
+    var selectedSemester = input.value;
 
-  // Define the valid semester options
-  var validSemesters = ["Spring", "Summer", "Fall", "Winter"];
+    // Define the valid semester options
+    var validSemesters = ["Spring", "Summer", "Fall", "Winter"];
 
-  // Check if the selected semester is a valid option
-  var isValidSemester = validSemesters.includes(selectedSemester);
+    // Check if the selected semester is a valid option
+    var isValidSemester = validSemesters.includes(selectedSemester);
 
-  // Display validation message
-  startSemesterValidationMessage.style.display = isValidSemester ? "none" : "block";
-  startSemesterValidationMessage.textContent = isValidSemester ? "" : "Invalid semester option.";
-});
+    // Display validation message
+    startSemesterValidationMessage.style.display = isValidSemester
+      ? "none"
+      : "block";
+    startSemesterValidationMessage.textContent = isValidSemester
+      ? ""
+      : "Invalid semester option.";
+  });
 
 /* Password section stuff */
 // Password validation: Must contain a mix of uppercase letters, lowercase letters, and numbers
-document.getElementById("passwordInput").addEventListener("input", function (event) { /* adds an event listener to the "passwordInput" element, which listens for the "input" event. */
-  var input = event.target; // represents the element that triggered the event, assign it to the variable input for reference.
+document
+  .getElementById("passwordInput")
+  .addEventListener("input", function (event) {
+    /* adds an event listener to the "passwordInput" element, which listens for the "input" event. */ var input =
+      event.target; // represents the element that triggered the event, assign it to the variable input for reference.
 
-  // Three boolean variables are initialized to false.
-  // variables will be used to track whether the password contains at least
-  // one lowercase letter, one uppercase letter, and one number
-  var hasLowercase = false;
-  var hasUppercase = false;
-  var hasNumber = false;
+    // Three boolean variables are initialized to false.
+    // variables will be used to track whether the password contains at least
+    // one lowercase letter, one uppercase letter, and one number
+    var hasLowercase = false;
+    var hasUppercase = false;
+    var hasNumber = false;
 
-  //  loop is used to iterate through each character of the password
-  for (var i = 0; i < input.value.length; i++) {
-    var char = input.value[i];
-    if (char >= "a" && char <= "z") {
-      hasLowercase = true;
-    } else if (char >= "A" && char <= "Z") {
-      hasUppercase = true;
-    } else if (char >= "0" && char <= "9") {
-      hasNumber = true;
-    }
+    //  loop is used to iterate through each character of the password
+    for (var i = 0; i < input.value.length; i++) {
+      var char = input.value[i];
+      if (char >= "a" && char <= "z") {
+        hasLowercase = true;
+      } else if (char >= "A" && char <= "Z") {
+        hasUppercase = true;
+      } else if (char >= "0" && char <= "9") {
+        hasNumber = true;
+      }
 
-    /*
+      /*
       each character is checked to determine whether it belongs to lowercase letters, uppercase letters, or numbers using their respective ASCII character codes.
       If a character matches any of these categories, the corresponding boolean variable is set to true.
     */
-  }
-
-  //  initialized to an empty string. 
-  // will be used to store the specific requirements that the password must meet
-  var message = "";
-
-  // A series of if statements are used to construct the message string based on the password validation rules.
-  // If a requirement is not met, a message for that requirement is added to the message string.
-  if (!hasLowercase) {
-    message += "At least one lowercase letter";
-  }
-  if (!hasUppercase) {
-    if (message !== "") {
-      message += ", ";
     }
-    message += "at least one uppercase letter";
-  }
-  if (!hasNumber) {
-    if (message !== "") {
-      message += ", ";
+
+    //  initialized to an empty string.
+    // will be used to store the specific requirements that the password must meet
+    var message = "";
+
+    // A series of if statements are used to construct the message string based on the password validation rules.
+    // If a requirement is not met, a message for that requirement is added to the message string.
+    if (!hasLowercase) {
+      message += "At least one lowercase letter";
     }
-    message += "at least one number";
-  }
-
-  if (input.value.length < 8) {
-    if (message !== "") {
-      message += ", ";
+    if (!hasUppercase) {
+      if (message !== "") {
+        message += ", ";
+      }
+      message += "at least one uppercase letter";
     }
-    message += "be at least 8 characters long";
-  }
+    if (!hasNumber) {
+      if (message !== "") {
+        message += ", ";
+      }
+      message += "at least one number";
+    }
 
-  if (input.value.trim() === "") {
-    // If the password input is empty, hide the validation message
-    showPasswordValidationMessage(false);
-  } else if (message === "") {
-    // If the password is valid, hide the validation message
-    showPasswordValidationMessage(false);
-  } else {
-    // If the password is invalid, show the validation message with specific feedback
-    showPasswordValidationMessage(
-      true,
-      "Password must contain: " + message + "."
-    );
-  }
+    if (input.value.length < 8) {
+      if (message !== "") {
+        message += ", ";
+      }
+      message += "be at least 8 characters long";
+    }
 
-  /*
+    if (input.value.trim() === "") {
+      // If the password input is empty, hide the validation message
+      showPasswordValidationMessage(false);
+    } else if (message === "") {
+      // If the password is valid, hide the validation message
+      showPasswordValidationMessage(false);
+    } else {
+      // If the password is invalid, show the validation message with specific feedback
+      showPasswordValidationMessage(
+        true,
+        "Password must contain: " + message + "."
+      );
+    }
+
+    /*
     After checking all the characters in the password, the length of the message string is examined.
     If it is empty, it means all password requirements are met, and the password is valid.
     If the password input is empty (all spaces) and contains no characters, the validation message is hidden.
     Otherwise, if the password is valid (all requirements are met), the validation message is hidden.
     If the password is invalid , the validation message is shown with the specific feedback provided in the message variable.
   */
-});
+  });
 
 // Function to show/hide the Password validation message
 function togglePasswordVisibility() {
@@ -233,8 +249,8 @@ function showPasswordValidationMessage(show, message) {
 }
 
 // Form submission handler
-document.getElementById("myForm").addEventListener("submit", function (event) { /* adds an event listener to the "submit" event of the form element with the id "myForm." */
-
+document.getElementById("myForm").addEventListener("submit", function (event) {
+  /* adds an event listener to the "submit" event of the form element with the id "myForm." */
   // fetches the password input element with the id "passwordInput" and assigns it to the variable passwordInput
   var passwordInput = document.getElementById("passwordInput");
 
@@ -314,7 +330,9 @@ document.getElementById("numbers").addEventListener("input", function (event) {
     It will be used to track whether the student ID is valid or not.
   */
   var input = event.target;
-  var studentIDValidationMessage = document.getElementById("studentIDValidation");
+  var studentIDValidationMessage = document.getElementById(
+    "studentIDValidation"
+  );
   var inputValue = input.value.trim();
   var isValid = true;
 
@@ -348,7 +366,8 @@ document.getElementById("numbers").addEventListener("input", function (event) {
   //  this block shows or hides the validation message for the student ID.
   if (!isValid) {
     showStudentIDValidationMessage(true);
-    studentIDValidationMessage.textContent = "Student ID must be exactly 9 digits.";
+    studentIDValidationMessage.textContent =
+      "Student ID must be exactly 9 digits.";
   } else {
     showStudentIDValidationMessage(false);
     studentIDValidationMessage.textContent = "";
@@ -359,7 +378,6 @@ document.getElementById("numbers").addEventListener("input", function (event) {
 function showStudentIDValidationMessage(show) {
   var validationMessage = document.getElementById("studentIDValidation");
   validationMessage.style.display = show ? "block" : "none";
-
 
   /*
     responsible for showing or hiding the validation message for the student ID.
@@ -373,27 +391,19 @@ function showStudentIDValidationMessage(show) {
   */
 }
 
-/* Word Count input section */
 // Function to count words and update word count label
-function countWords(inputElement) { /* The inputElement is expected to be an input field from which the word count needs to be calculated. */
-  /*
-    retrieves the value of the input field and then .trim() method is used to remove any leading or trailing whitespaces from the value.
-    .split(" ") is used to split the trimmed value into an array of words based on spaces (" ").
-  */
-  var words = inputElement.value.trim().split(" ");
+function countWords(inputElement) {
+  var words = inputElement.value.split(" ");
   var wordCountLabel = document.getElementById("wordCountLabel");
 
   // Remove empty words from the array
   words = words.filter(function (word) {
-    return word !== "";
+    return word.trim() !== "";
   });
 
-  // calculates the remaining words the user can input. The maximum word count allowed is 25
-  var remainingWords = 25 - words.length; // initialized with the difference between the maximum word count and the number of words in the words array.
-
-  // Set minimum remaining words to zero
-  remainingWords = Math.max(remainingWords, 0); //  ensure that remainingWords is at least zero. If it is negative, it is set to zero.
-  wordCountLabel.textContent = "Words left: " + remainingWords;  //  display the remaining word count.
+  var remainingWords = 25 - words.length;
+  remainingWords = Math.max(remainingWords, 0);
+  wordCountLabel.textContent = "Words left: " + remainingWords;
 
   // Disable the input only when remaining words are zero and the user presses the space bar
   inputElement.disabled = remainingWords === 0 && event.data === " ";
@@ -420,15 +430,20 @@ window.addEventListener("load", function () {
   showStudentIDValidationMessage(false);
 
   // Reset the semester input
-  startSemester.value ="";
+  startSemester.value = "";
   startSemesterValidationMessage(false);
 
   // Reset the start year input
-  startYearInput.value ="";
+  startYearInput.value = "";
   startYearValidationMessage(false);
 
-  // Add the event listener for word count using "input" event
-  wordInput.addEventListener("input", function (event) {
-    countWords(wordInput, event);
+  // Add the event listener for word count using "keyup" event
+  wordInput.addEventListener("input", function () {
+    countWords(wordInput);
   });
+});
+
+// Add the event listener for word count using "input" event
+document.getElementById("word").addEventListener("input", function () {
+  countWords(document.getElementById("word"));
 });
