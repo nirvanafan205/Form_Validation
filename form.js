@@ -51,6 +51,7 @@ document
   if show is false, the message is hidden (display: none)
   This function is used to control the visibility of the validation message.
 */
+
 // Function to show/hide the Username validation message
 function showUsernameValidationMessage(show) {
   var validationMessage = document.getElementById("usernameValidation");
@@ -64,7 +65,18 @@ function showUsernameValidationMessage(show) {
    if all characters are lowercase letters, the validation message is cleared.
 */
 
-/* Starting ponit stuff */
+
+
+
+
+
+
+
+
+
+
+
+/* Starting point stuff */
 // Start Year validation: Must be a valid year (2-digit or 4-digit, not in the future)
 document.getElementById("startYear").addEventListener("blur", function (event) {
   var input = event.target;
@@ -218,6 +230,7 @@ function togglePasswordVisibility() {
   var passwordInput = document.getElementById("passwordInput");
   var togglePassword = document.getElementById("togglePassword");
 
+  // this is where to the user can click on the img to hide or restore password visibility
   if (passwordInput.type === "password") {
     passwordInput.type = "text";
     togglePassword.classList.remove("fa-lock");
@@ -246,23 +259,49 @@ function showPasswordValidationMessage(show, message) {
     If show is true, the message is displayed (display: block), and if show is false, the message is hidden (display: none).
     The textContent property is used to set the message content.
   */
+
+  if (!show) {
+    validationMessage.textContent = "";
+  }
 }
+
+
+
+
+
+
+
+
+
 
 // Form submission handler
 document.getElementById("myForm").addEventListener("submit", function (event) {
-  /* adds an event listener to the "submit" event of the form element with the id "myForm." */
-  // fetches the password input element with the id "passwordInput" and assigns it to the variable passwordInput
-  var passwordInput = document.getElementById("passwordInput");
+  event.preventDefault(); // Prevent form submission
 
-  // Three boolean variables are initialized to false. will be used to track whether the password contains at least one
-  // lowercase letter, one uppercase letter, and one number, respectively
+  // Check form validity
+  var isValid = true;
+
+  // Check Username validity
+  var userInput = document.getElementById("userInput").value;
+  var isValidUsername = isLowerCaseLetters(userInput);
+  if (!isValidUsername) {
+    isValid = false;
+    showUsernameValidationMessage(true);
+    document.getElementById("usernameValidation").textContent =
+      "Username must contain only lowercase letters.";
+  } else {
+    showUsernameValidationMessage(false);
+  }
+
+  // Check Password validity
+  var passwordInput = document.getElementById("passwordInput").value;
   var hasLowercase = false;
   var hasUppercase = false;
   var hasNumber = false;
 
-  // loop is used to iterate through each character of the password
-  for (var i = 0; i < passwordInput.value.length; i++) {
-    var char = passwordInput.value[i];
+  for (var i = 0; i < passwordInput.length; i++) {
+    var char = passwordInput[i];
+
     if (char >= "a" && char <= "z") {
       hasLowercase = true;
     } else if (char >= "A" && char <= "Z") {
@@ -272,7 +311,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     }
   }
 
-  var message = "Password must contain: ";
+  var message = "";
 
   if (!hasLowercase) {
     message += "at least one lowercase letter, ";
@@ -286,28 +325,118 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     message += "at least one number, ";
   }
 
-  if (passwordInput.value.length < 8) {
+  if (passwordInput.length < 8) {
     message += "and be at least 8 characters long.";
   } else {
     // Remove the trailing comma and space from the message
     message = message.substring(0, message.length - 2);
   }
 
-  if (message === "Password must contain:") {
-    // If the password is valid, hide the validation message
+  if (message === "") {
     showPasswordValidationMessage(false);
   } else {
-    // If the password is invalid, show the validation message with specific feedback
-    showPasswordValidationMessage(true, message);
-    event.preventDefault(); // Prevent form submission if validation fails
+    isValid = false;
+    showPasswordValidationMessage(true, "Password must contain: " + message);
   }
 
-  // display an alert message:
-  alert("Form validation succeeded!");
+  // Check Student ID validity
+  var studentIDInput = document.getElementById("numbers").value.trim();
+  var isValidStudentID =
+    isNumeric(studentIDInput) && studentIDInput.length === 9;
+  if (!isValidStudentID) {
+    isValid = false;
+    showStudentIDValidationMessage(true);
+    document.getElementById("studentIDValidation").textContent =
+      "Student ID must be exactly 9 digits.";
+  } else {
+    showStudentIDValidationMessage(false);
+  }
 
-  // prevents the form from being submitted to the server, effectively preventing form submission if the validation fails.
-  event.preventDefault();
+  // Check Start Year validity
+  var startYearInput = document.getElementById("startYear").value.trim();
+  var isValidYearFormat =
+    startYearInput.length === 2 || startYearInput.length === 4;
+  var isValidYearDigits = isNumeric(startYearInput);
+  var currentYear = new Date().getFullYear();
+  var year =
+    startYearInput.length === 2
+      ? parseInt("20" + startYearInput, 10)
+      : parseInt(startYearInput, 10);
+  var isNotInFuture = year <= currentYear;
+  var isValidStartYear =
+    isValidYearFormat && isValidYearDigits && isNotInFuture;
+
+  if (!isValidStartYear) {
+    isValid = false;
+    document.getElementById("startYearValidation").style.display = "block";
+    document.getElementById("startYearValidation").textContent =
+      "Invalid year format or year is in the future.";
+  } else {
+    document.getElementById("startYearValidation").style.display = "none";
+  }
+
+  // Check Start Semester validity
+  var startSemesterInput = document.getElementById("startSemester").value;
+  var validSemesters = ["Spring", "Summer", "Fall", "Winter"];
+  var isValidSemester = validSemesters.includes(startSemesterInput);
+
+  if (!isValidSemester) {
+    isValid = false;
+    document.getElementById("startSemesterValidation").style.display = "block";
+    document.getElementById("startSemesterValidation").textContent =
+      "Invalid semester option.";
+  } else {
+    document.getElementById("startSemesterValidation").style.display = "none";
+  }
+
+  // Clear success message if the form is not valid
+  showSuccessMessage("");
+
+  // Display success message if the form is valid
+  if (isValid) {
+    showSuccessMessage("SUCCESS!");
+    document.body.classList.remove("invalid-form"); // Remove the invalid-form class if the form is valid
+    document.getElementById("errorMessage").textContent = ""; // Clear the error message if the form is valid
+  } else {
+    // Apply styles for invalid forms
+    document.body.classList.add("invalid-form"); // Add the invalid-form class to change the background color
+    document.getElementById("errorMessage").textContent =
+      "Please fix the errors in the form."; // Display the error message
+  }
 });
+
+// Function to show the success message
+function showSuccessMessage(message) {
+  var successMessage = document.getElementById("successMessage");
+  successMessage.textContent = message;
+  if (message) {
+    successMessage.style.display = "block";
+  } else {
+    successMessage.style.display = "none";
+  }
+}
+
+// Function to check if a string contains only lowercase letters
+function isLowerCaseLetters(input) {
+  for (var i = 0; i < input.length; i++) {
+    var char = input[i];
+    if (char < "a" || char > "z") {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Function to check if a string contains only numbers
+function isNumeric(input) {
+  for (var i = 0; i < input.length; i++) {
+    var char = input[i];
+    if (char < "0" || char > "9") {
+      return false;
+    }
+  }
+  return true;
+}
 
 /* Student ID stuff */
 // Student ID validation: Must contain exactly 9 digits
@@ -409,7 +538,7 @@ function countWords(inputElement) {
   inputElement.disabled = remainingWords === 0 && event.data === " ";
 }
 
-// Call the countWords() function when the page loads to display the initial word count
+// resets everything if the page is refreshed
 window.addEventListener("load", function () {
   var wordInput = document.getElementById("word");
   var userInput = document.getElementById("userInput");
