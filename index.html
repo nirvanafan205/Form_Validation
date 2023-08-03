@@ -33,12 +33,25 @@
                 <i class="fa-solid fa-arrow-up-1-9"></i>
             </div>
 
+            <!-- Semeseter input -->
+            <div class="inputBox">
+                <input type="text" placeholder="Start Semester" id="startSemester" required>
+                <i class="fa-solid fa-calendar"></i>
+            </div>
+            <div class="inputBox">
+                <input type="text" placeholder="Start Year" id="startYear" required>
+                <i class="fa-solid fa-calendar"></i>
+            </div>
+
             <!-- Words -->
             <div class="inputBox">
                 <input type="text" placeholder="Words" required id="word">
             </div>
 
             <p id="wordCountLabel" class="word-count">Words left: 25</p>
+
+            <!--- Semester Validation -->
+            <div id="startSemesterValidation" class="validation-message"></div>
 
             <!-- Username validation message -->
             <p id="usernameValidation" class="validation-message"></p>

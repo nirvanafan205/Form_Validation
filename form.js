@@ -60,6 +60,56 @@ function showUsernameValidationMessage(show) {
    if all characters are lowercase letters, the validation message is cleared.
 */
 
+/* Starting ponit stuff */
+// Start Year validation: Must be a valid year (2-digit or 4-digit, not in the future)
+document.getElementById("startYear").addEventListener("input", function (event) {
+  var input = event.target;
+  var startYearValidationMessage = document.getElementById("startYearValidation");
+  var startYear = input.value.trim();
+
+  // Check if the year is in 2-digit or 4-digit format
+  var isValidFormat = startYear.length === 2 || startYear.length === 4;
+
+  // Check if the year contains only digits
+  var isValidYear = true;
+  for (var i = 0; i < startYear.length; i++) {
+    var char = startYear[i];
+    if (char < "0" || char > "9") {
+      isValidYear = false;
+      break;
+    }
+  }
+
+  // Check if the year is not in the future
+  var currentYear = new Date().getFullYear();
+  var year = startYear.length === 2 ? parseInt("20" + startYear, 10) : parseInt(startYear, 10);
+  var isNotInFuture = year <= currentYear;
+
+  // Combine the format, valid year, and not in the future checks
+  var isValid = isValidFormat && isValidYear && isNotInFuture;
+
+  // Display validation message
+  startYearValidationMessage.style.display = isValid ? "none" : "block";
+  startYearValidationMessage.textContent = isValid ? "" : "Invalid year format or year is in the future.";
+});
+
+// Start Semester validation: Must be a valid semester option
+document.getElementById("startSemester").addEventListener("change", function (event) {
+  var input = event.target;
+  var startSemesterValidationMessage = document.getElementById("startSemesterValidation");
+  var selectedSemester = input.value;
+
+  // Define the valid semester options
+  var validSemesters = ["Spring", "Summer", "Fall", "Winter"];
+
+  // Check if the selected semester is a valid option
+  var isValidSemester = validSemesters.includes(selectedSemester);
+
+  // Display validation message
+  startSemesterValidationMessage.style.display = isValidSemester ? "none" : "block";
+  startSemesterValidationMessage.textContent = isValidSemester ? "" : "Invalid semester option.";
+});
+
 /* Password section stuff */
 // Password validation: Must contain a mix of uppercase letters, lowercase letters, and numbers
 document.getElementById("passwordInput").addEventListener("input", function (event) { /* adds an event listener to the "passwordInput" element, which listens for the "input" event. */
